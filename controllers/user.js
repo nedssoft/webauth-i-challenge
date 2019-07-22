@@ -28,7 +28,7 @@ const loginUser = async (req, res, next) => {
     const user = await User.find({ email });
     const isMatched = user &&  await bcrypt.compareSync(password, user.password);
     if (!isMatched) {
-      throw new ErrorHandler(403, "Invalid user credentials")
+      throw new ErrorHandler(401, 'You shall not pass!')
     }
     return res.status(200).json({
       user: user.email,

@@ -1,8 +1,9 @@
 const { Router } = require('express')
-const { createNewUser, loginUser } = require('../controllers/user')
-const { validateUser } = require('../middleware/')
+const { createNewUser, loginUser, getUsers } = require('../controllers/user')
+const { validateUser, isLoggedIn } = require('../middleware/')
 const router = Router()
 
-router.post('/users/register', validateUser, createNewUser)
-router.post('/users/login', validateUser, loginUser)
+router.post('/register', validateUser, createNewUser)
+router.post('/login', validateUser, loginUser)
+router.get('/users', isLoggedIn, getUsers)
 module.exports = router
