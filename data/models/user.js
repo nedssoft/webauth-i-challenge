@@ -27,7 +27,16 @@ const find = async userData => {
   }
 };
 
+const getUsers = () => {
+  try {
+    return db('users');
+  } catch (error) {
+    throw new ErrorHandler(500, error.message);
+  }
+}
+
 module.exports = {
   createUser,
-  find
+  find,
+  getUsers
 };

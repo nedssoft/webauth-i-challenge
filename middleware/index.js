@@ -18,6 +18,7 @@ const validateUser = (req, res, next) => {
 };
 
 const isLoggedIn = async (req, res, next) => {
+
   try {
     const { email, password } = req.headers;
     if (!email || !password) {
@@ -25,7 +26,7 @@ const isLoggedIn = async (req, res, next) => {
     }
     const user = await User.find({ email });
     const isMatched =
-      user && (await bcrypt.compareSync(password, user.password));
+      user && await bcrypt.compareSync(password, user.password);
     if (!isMatched) {
       throw new ErrorHandler(401, "Invalid Credentials");
     }

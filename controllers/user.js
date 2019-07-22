@@ -31,7 +31,7 @@ const loginUser = async (req, res, next) => {
       throw new ErrorHandler(401, 'You shall not pass!')
     }
     return res.status(200).json({
-      user: user.email,
+      user,
       message: 'Login successful'
     })
   } catch (error) {
@@ -39,7 +39,17 @@ const loginUser = async (req, res, next) => {
   }
 }
 
+const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.getUsers();
+    return res.status(200).json({ users })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   createNewUser,
-  loginUser
+  loginUser,
+  getAllUsers
 }
