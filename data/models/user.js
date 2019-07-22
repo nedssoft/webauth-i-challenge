@@ -13,6 +13,21 @@ const createUser = userData => {
   }
 };
 
+const find = async userData => {
+  try {
+    const [key] = Object.keys(userData);
+    const [value] = Object.values(userData);
+    const user = await db("users").where({ [key] : value}).first();
+    if (!user) {
+      throw new ErrorHandler(404, "User not found");
+    }
+    return user;
+  } catch (error) {
+    throw new ErrorHandler(500, error.message);
+  }
+};
+
 module.exports = {
-  createUser
+  createUser,
+  find
 };

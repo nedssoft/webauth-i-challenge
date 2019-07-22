@@ -13,7 +13,7 @@ const createNewUser = async (req, res, next) => {
         throw new ErrorHandler(500, "Could not save new user");
       }
       return res.status(201).json({
-        "message:": "OK",
+        "message:": "registration successful",
         user
       });
     }
@@ -22,6 +22,24 @@ const createNewUser = async (req, res, next) => {
   }
 };
 
+const loginUser = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.find({ email });
+    const isMatched = user &&  await bcrypt.compareSync(password, user.password);
+    if (!isMatched) {
+      throw new ErrorHandler(403, "Invalid user credentials")
+    }
+    return res.status(200).json({
+      user: user.email,
+      message: 'Login successful'
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
-  createNewUser
+  createNewUser,
+  loginUser
 }
