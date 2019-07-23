@@ -1,6 +1,4 @@
 const { ErrorHandler } = require("express-error-bouncer");
-const User = require("../data/models/user");
-const bcrypt = require("bcrypt");
 const validateUser = (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -19,15 +17,8 @@ const validateUser = (req, res, next) => {
 
 const isLoggedIn = async (req, res, next) => {
   try {
-    const { email, password } = req.headers;
-    if (!email || !password) {
-      res.status(401).json({ message: "Invalid Credentials" });
-    }
-    const user = await User.find({ email });
-    const isMatched =
-      user && await bcrypt.compareSync(password, user.password);
-    if (!isMatched) {
-      throw new ErrorHandler(401, "Invalid Credentials");
+    if (!(req.session && req.session.user)) {
+      throw new ErrorHandler(401, "You must login to access this resource");
     }
     next();
   } catch (error) {

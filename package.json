@@ -18,6 +18,7 @@
   "homepage": "https://github.com/oriechinedu/webauth-i-challenge#readme",
   "dependencies": {
     "bcrypt": "^3.0.6",
+    "connect-session-knex": "^1.4.0",
     "express": "^4.17.1",
     "express-error-bouncer": "^1.0.1",
     "express-session": "^1.16.2",
