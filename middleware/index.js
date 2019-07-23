@@ -18,7 +18,6 @@ const validateUser = (req, res, next) => {
 };
 
 const isLoggedIn = async (req, res, next) => {
-
   try {
     const { email, password } = req.headers;
     if (!email || !password) {

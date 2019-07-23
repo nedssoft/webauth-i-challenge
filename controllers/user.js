@@ -30,6 +30,7 @@ const loginUser = async (req, res, next) => {
     if (!isMatched) {
       throw new ErrorHandler(401, 'You shall not pass!')
     }
+    req.session.user = user
     return res.status(200).json({
       user,
       message: 'Login successful'
