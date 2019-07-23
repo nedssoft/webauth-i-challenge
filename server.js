@@ -10,7 +10,8 @@ app.use(express.json())
 app.use(session(sessionConfig));
 app.get('/', (req, res) => {
   res.send('Hello API')
-})
+});
+
 app.use('/api', routes)
 app.use(bouncer)
 module.exports = app

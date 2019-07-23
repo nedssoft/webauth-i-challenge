@@ -49,8 +49,20 @@ const getAllUsers = async (req, res, next) => {
   }
 }
 
+const logout = (req, res, next) => {
+  try {
+    if (req.session.id) {
+      req.session.destroy();
+    }
+    res.end('Logged out!')
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   createNewUser,
   loginUser,
-  getAllUsers
+  getAllUsers,
+  logout
 }
